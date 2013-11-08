@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+#import <CoreImage/CoreImage.h>
 
-@interface ESViewController : UIViewController
+@interface ESViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+
+@property (nonatomic, strong) IBOutlet UIImageView *theImage;
+@property (nonatomic, weak) IBOutlet UIButton *picture;
+
+- (IBAction)picButton:(id)sender;
+
 
 @end
