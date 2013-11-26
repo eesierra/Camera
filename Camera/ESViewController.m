@@ -8,6 +8,7 @@
 
 #import "ESViewController.h"
 #import "UIImageView+Circle.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface ESViewController ()
 
@@ -164,20 +165,20 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    _chosenImage = info[UIImagePickerControllerEditedImage];
     
     
     _theImage = [UIImageView circleImageView:CGRectMake(10.f, 50.f, 300.f, 300.f)];
     
     [self.view addSubview:_theImage];
-    [_theImage setImage:chosenImage];
+    [_theImage setImage:_chosenImage];
     
     [_theImage setContentMode:UIViewContentModeScaleAspectFit];
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
     
-    UIImageWriteToSavedPhotosAlbum(chosenImage, self, @selector(image:didFinishedSavingWithError:contextInfo:), nil);
+    UIImageWriteToSavedPhotosAlbum(_chosenImage, self, @selector(image:didFinishedSavingWithError:contextInfo:), nil);
     
 }
 
@@ -194,6 +195,158 @@
     }
     
     
+}
+
+- (IBAction)shareTwitter:(id)sender
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        SLComposeViewController *twitter = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [twitter setInitialText:@"Look at my pic! :)"];
+        [twitter addImage:self.chosenImage];
+        
+        NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+        [twitter addURL:url];
+        [twitter setCompletionHandler:^(SLComposeViewControllerResult result) {
+            
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    NSLog(@"Post Cancelled");
+                    break;
+                case SLComposeViewControllerResultDone:
+                    NSLog(@"Post Successful");
+                    break;
+            }
+        
+                }];
+            
+            [self presentViewController:twitter animated:YES completion:nil];
+            
+    } else {
+        NSString *message1 = @"Unfortunately, you can't post at this time. This might be because Twitter is not available or you don't have an account associated with this device.";
+        UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:@"We're Sorry!" message:message1 delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+        [alertView1 show];}
+
+    
+}
+
+- (IBAction)shareFacebook:(id)sender
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *facebook = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        [facebook setInitialText:@"Look at my pic! :)"];
+        [facebook addImage:self.chosenImage];
+        
+        NSURL *url = [NSURL URLWithString:@"http://www.facebook.com"];
+        [facebook addURL:url];
+        [facebook setCompletionHandler:^(SLComposeViewControllerResult result) {
+            
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    NSLog(@"Post Cancelled");
+                    break;
+                case SLComposeViewControllerResultDone:
+                    NSLog(@"Post Successful");
+                    break;
+            }
+            
+        }];
+        
+        [self presentViewController:facebook animated:YES completion:nil];
+        
+    } else {
+        NSString *message1 = @"Unfortunately, you can't post at this time. This might be because Facebook is not available or you don't have an account associated with this device.";
+        UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:@"We're Sorry!" message:message1 delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+        [alertView1 show];}
+    
+    
+}
+
+- (IBAction)shareEmail:(id)sender
+{
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    
+    if ([mailClass canSendMail]) {
+        MFMailComposeViewController *email = [[MFMailComposeViewController alloc] init];
+        email.mailComposeDelegate = self;
+        
+        [email setSubject:@"I want to share this pic with you"];
+        
+        NSData *imageInfo = UIImageJPEGRepresentation(self.chosenImage, 0.0);
+        [email addAttachmentData:imageInfo mimeType:@"image/jpeg" fileName:@"Image"];
+        
+        NSString *body = @"Here's the image! <p>Check out the website <a href= http://www.google.com> Google</a> for more info!</p>";
+        
+        [email setMessageBody:body isHTML:YES];
+        
+        [self presentViewController:email animated:YES completion:NULL];
+        
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to Send" message:@"Please configure your device to send e-mails." delegate:self cancelButtonTitle:@"Done" otherButtonTitles: nil];
+        [alert show];
+    }
+    
+    
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Send Failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+    
+}
+
+- (IBAction)loginFB:(id)sender
+{
+    [FBSession openActiveSessionWithPublishPermissions:@[@"publish_actions"]
+                                       defaultAudience:FBSessionDefaultAudienceEveryone
+                                          allowLoginUI:YES
+                                     completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                         [self sessionStateChanged:session state:status error:error];
+                                     }];
+
+    
+    
+}
+
+- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error
+{
+    switch (state)
+    {
+        case FBSessionStateOpen:
+            [FBRequestConnection startForPostStatusUpdate:@"Hello! How are you guys doing?!" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                if (!error) {
+                    NSLog(@"Success!");
+                } else {
+                    NSLog(@"Whoa! Error: %@", [error localizedDescription]);
+                }
+            }];
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning

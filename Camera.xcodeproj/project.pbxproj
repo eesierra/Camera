@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		911B8C8F1829DE19002AEEF3 /* UIImageView+Circle.m in Sources */ = {isa = PBXBuildFile; fileRef = 911B8C8E1829DE19002AEEF3 /* UIImageView+Circle.m */; };
 		911B8C911829E429002AEEF3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911B8C901829E429002AEEF3 /* QuartzCore.framework */; };
+		911CEF881844085D00A7EBD9 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911CEF871844085D00A7EBD9 /* Twitter.framework */; };
+		911CEF8A1844086600A7EBD9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911CEF891844086600A7EBD9 /* Social.framework */; };
+		911CEF8C1844162200A7EBD9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911CEF8B1844162200A7EBD9 /* MessageUI.framework */; };
+		911CEF8E184424AA00A7EBD9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911CEF8D184424AA00A7EBD9 /* FacebookSDK.framework */; };
 		911E2A281829AE6F0050D29B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911E2A271829AE6F0050D29B /* Foundation.framework */; };
 		911E2A2A1829AE6F0050D29B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911E2A291829AE6F0050D29B /* CoreGraphics.framework */; };
 		911E2A2C1829AE6F0050D29B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911E2A2B1829AE6F0050D29B /* UIKit.framework */; };
@@ -40,6 +44,10 @@
 		911B8C8D1829DE19002AEEF3 /* UIImageView+Circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Circle.h"; sourceTree = "<group>"; };
 		911B8C8E1829DE19002AEEF3 /* UIImageView+Circle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Circle.m"; sourceTree = "<group>"; };
 		911B8C901829E429002AEEF3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		911CEF871844085D00A7EBD9 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		911CEF891844086600A7EBD9 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		911CEF8B1844162200A7EBD9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		911CEF8D184424AA00A7EBD9 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Camera/FacebookSDK.framework; sourceTree = "<group>"; };
 		911E2A241829AE6F0050D29B /* Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		911E2A271829AE6F0050D29B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		911E2A291829AE6F0050D29B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -67,8 +75,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				911CEF8C1844162200A7EBD9 /* MessageUI.framework in Frameworks */,
+				911CEF8A1844086600A7EBD9 /* Social.framework in Frameworks */,
+				911CEF881844085D00A7EBD9 /* Twitter.framework in Frameworks */,
 				919AF902182C5F0A00F741FC /* CoreImage.framework in Frameworks */,
 				911B8C911829E429002AEEF3 /* QuartzCore.framework in Frameworks */,
+				911CEF8E184424AA00A7EBD9 /* FacebookSDK.framework in Frameworks */,
 				911E2A2A1829AE6F0050D29B /* CoreGraphics.framework in Frameworks */,
 				911E2A2C1829AE6F0050D29B /* UIKit.framework in Frameworks */,
 				911E2A281829AE6F0050D29B /* Foundation.framework in Frameworks */,
@@ -110,6 +122,10 @@
 		911E2A261829AE6F0050D29B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				911CEF8D184424AA00A7EBD9 /* FacebookSDK.framework */,
+				911CEF8B1844162200A7EBD9 /* MessageUI.framework */,
+				911CEF891844086600A7EBD9 /* Social.framework */,
+				911CEF871844085D00A7EBD9 /* Twitter.framework */,
 				919AF901182C5F0A00F741FC /* CoreImage.framework */,
 				911B8C901829E429002AEEF3 /* QuartzCore.framework */,
 				911E2A271829AE6F0050D29B /* Foundation.framework */,
@@ -393,6 +409,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/esierr1/Developer/Camera/Camera,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Camera/Camera-Prefix.pch";
 				INFOPLIST_FILE = "Camera/Camera-Info.plist";
@@ -407,6 +427,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/esierr1/Developer/Camera/Camera,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Camera/Camera-Prefix.pch";
 				INFOPLIST_FILE = "Camera/Camera-Info.plist";
